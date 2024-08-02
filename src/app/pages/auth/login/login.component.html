@@ -1,1 +1,54 @@
-<p>login works!</p>,
+<section
+  class="m-16 p-10 flex flex-col text-center items-center bg-white rounded-3xl border-black border-8"
+>
+  <h1 class="m-5 text-4xl font-bold">Iniciar sesión</h1>
+  <form [formGroup]="myForm" (ngSubmit)="login()" class="flex flex-col">
+    <div class="mt-5 flex flex-row items-center justify-between">
+      <label class="text-xl" for="email">Correo electrónico</label>
+      <input
+        class="mx-2 px-2 py-1 border-2 border-black w-96 rounded-lg"
+        type="email"
+        formControlName="email"
+        name="email"
+        required
+      />
+    </div>
+    <div class="mt-5 flex flex-row items-center justify-between">
+      <label class="text-xl" for="password">Contraseña</label>
+      <input
+        class="mx-2 px-2 py-1 border-2 border-black w-96 rounded-lg"
+        type="{{ showPassword ? 'text' : 'password' }}"
+        formControlName="password"
+        name="password"
+        required
+      />
+      <i
+        class="fa mr-3"
+        [ngClass]="{ 'fa-eye': !showPassword, 'fa-eye-slash': showPassword }"
+        (click)="togglePasswordVisibility()"
+      ></i>
+    </div>
+    <button
+      *ngIf="!loading"
+      class="text-xl mt-10 font-bold text-white p-3 rounded-2xl transition-all duration-500"
+      type="submit"
+      [disabled]="myForm.invalid"
+      [ngClass]="{
+        'bg-violet-900 active:bg-violet-900 active:shadow-lg active:shadow-black active:translate-y-1 hover:bg-black hover:shadow-lg hover:shadow-black hover:translate-y-1':
+          !myForm.invalid,
+        'bg-gray-700 cursor-not-allowed': myForm.invalid
+      }"
+    >
+      Iniciar
+    </button>
+
+    <button
+      *ngIf="loading"
+      class="text-xl mt-10 font-bold text-white p-3 rounded-2xl transition-all duration-500 bg-gray-700 cursor-not-allowed"
+      type="submit"
+      [disabled]="true"
+    >
+      <spinner></spinner>
+    </button>
+  </form>
+</section>

@@ -1,0 +1,32 @@
+<section class="my-10">
+  <h1 class="text-6xl text-white font-bold flex justify-center">
+    Panel de administración
+  </h1>
+  <nav
+    class="text-black flex flex-row text-center items-center justify-between mt-10 p-5 bg-white rounded-3xl"
+  >
+    <div class="font-bold">
+      <a
+        class="mr-10 bg-white p-5 rounded-xl underline hover:bg-black hover:text-white hover:shadow-xl hover:shadow-black transition-all duration-500"
+        href="admin/subcategories"
+        >Subcategorías</a
+      >
+      <a
+        class="mr-10 bg-white p-5 rounded-xl underline hover:bg-black hover:text-white hover:shadow-xl hover:shadow-black transition-all duration-500"
+        href="admin/categories"
+        >Categorías</a
+      >
+      <a
+        class="mr-10 bg-white p-5 rounded-xl underline hover:bg-black hover:text-white hover:shadow-xl hover:shadow-black transition-all duration-500"
+        href="admin/articles"
+        >Artículos</a
+      >
+    </div>
+    <p
+      class="text-xl font-bold p-5 rounded-xl bg-black text-white hover:bg-white hover:text-black transition-all duration-500 hover:translate-y-1 hover:shadow-xl hover:shadow-black"
+      (click)="logout()"
+    >
+      Cerrar sesión
+    </p>
+  </nav>
+</section>
