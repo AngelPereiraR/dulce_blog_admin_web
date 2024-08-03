@@ -1,1 +1,158 @@
-<p>subcategories_list works!</p>,
+<div class="p-7 bg-blue-100 rounded-3xl">
+  <h1
+    class="text-4xl font-bold"
+    *ngIf="!firstLoading && totalSubcategories()! > 0"
+  >
+    Hay {{ totalSubcategories() }} subcategorías/s
+  </h1>
+  <h1
+    class="text-4xl font-bold"
+    *ngIf="!firstLoading && totalSubcategories()! === 0"
+  >
+    No hay equipos
+  </h1>
+  <h1 class="text-4xl font-bold" *ngIf="firstLoading">
+    Cargando subcategorías/s
+  </h1>
+
+  <div class="my-5" *ngIf="!firstLoading">
+    <button
+      class="mx-3 font-bold text-3xl"
+      (click)="getSubcategories(position() - 1)"
+    >
+      ◄
+    </button>
+    <button
+      class="mx-3 p-3 font-bold text-2xl rounded-full border-2 border-black"
+      *ngFor="let pageNumber of getPageNumbers()"
+      (click)="getSubcategories(pageNumber - 1)"
+      [ngClass]="{
+        'bg-white text-black': pageNumber === position() + 1,
+        'bg-black text-white': pageNumber !== position() + 1
+      }"
+    >
+      {{ pageNumber }}
+    </button>
+    <button
+      class="mx-3 font-bold text-3xl"
+      (click)="getSubcategories(position() + 1)"
+    >
+      ►
+    </button>
+  </div>
+  <table class="w-full" *ngIf="!firstLoading">
+    <thead>
+      <tr class="text-3xl">
+        <th>Nº</th>
+        <th>Nombre</th>
+        <th>Parte final de la URL</th>
+        <th>Activado</th>
+        <th>Creado a</th>
+        <th>Editado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let subcategory of subcategories(); let i = index">
+      <tr class="whitespace-nowrap text-wrap">
+        <td class="1/12">
+          <div class="flex mt-4 justify-center items-center text-2xl">
+            {{ i + 1 + 8 * position() }}
+          </div>
+        </td>
+        <td class="w-1/6">
+          <div
+            class="whitespace-nowrap text-wrap flex mt-4 justify-center items-center text-2xl"
+            [title]="subcategory.name"
+          >
+            {{ subcategory.name }}
+          </div>
+        </td>
+        <td class="w-1/6">
+          <div
+            [title]="subcategory.slug"
+            class="whitespace-nowrap text-wrap flex mt-4 justify-center items-center text-2xl"
+          >
+            {{ subcategory.slug }}
+          </div>
+        </td>
+        <td class="w-1/6">
+          <div
+            [title]="subcategory.enabled"
+            class="whitespace-nowrap text-wrap flex mt-4 justify-center items-center text-2xl"
+          >
+            {{ subcategory.enabled ? "Sí" : "No" }}
+          </div>
+        </td>
+        <td class="w-1/6">
+          <div
+            [title]="subcategory.created_at"
+            class="whitespace-nowrap text-wrap flex mt-4 justify-center items-center text-2xl"
+          >
+            {{ subcategory.created_at }}
+          </div>
+        </td>
+        <td class="w-1/6">
+          <div
+            [title]="subcategory.updated_at"
+            class="whitespace-nowrap text-wrap flex mt-4 justify-center items-center text-2xl"
+          >
+            {{ subcategory.updated_at }}
+          </div>
+        </td>
+        <td class="w-1/8">
+          <div class="flex mt-4 justify-center items-center text-xl">
+            <div class="">
+              <button
+                *ngIf="!loading"
+                (click)="removeSubcategory(subcategory._id)"
+                class="fa-solid fa-trash m-2 p-5 bg-red-600 rounded-full"
+                title="Eliminar subcategoría"
+              ></button>
+              <a
+                *ngIf="!loading"
+                href="/admin/subcategories/edit/{{ subcategory._id }}"
+                class="fa-solid fa-edit m-2 p-5 bg-blue-600 text-white rounded-full"
+                title="Editar subcategoría"
+              ></a>
+              <spinner *ngIf="loading" title="Eliminar subcategoría"></spinner>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="my-5" *ngIf="!firstLoading">
+    <button
+      class="mx-3 font-bold text-3xl"
+      (click)="getSubcategories(position() - 1)"
+    >
+      ◄
+    </button>
+    <button
+      class="mx-3 p-3 font-bold text-2xl rounded-full border-2 border-black"
+      *ngFor="let pageNumber of getPageNumbers()"
+      (click)="getSubcategories(pageNumber - 1)"
+      [ngClass]="{
+        'bg-white text-black': pageNumber === position() + 1,
+        'bg-black text-white': pageNumber !== position() + 1
+      }"
+    >
+      {{ pageNumber }}
+    </button>
+    <button
+      class="mx-3 font-bold text-3xl"
+      (click)="getSubcategories(position() + 1)"
+    >
+      ►
+    </button>
+  </div>
+  <spinner *ngIf="firstLoading"></spinner>
+  <div class="m-2" *ngIf="!firstLoading">
+    <a
+      href="admin/subcategories/add"
+      class="fa-solid fa-plus m-2 p-5 bg-blue-600 text-white rounded-full text-xl"
+      title="Añadir subcategoría"
+    ></a>
+  </div>
+</div>
