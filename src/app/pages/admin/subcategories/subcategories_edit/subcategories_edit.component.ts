@@ -85,7 +85,7 @@ export class SubcategoriesEditComponent implements OnInit {
         next: () => {
           Swal.fire(
             'Cambiar subcategoría',
-            'Cambio de perfil correcto.',
+            'Cambio de subcategoría correcto.',
             'success'
           );
           this.router.navigateByUrl('admin/subcategories');

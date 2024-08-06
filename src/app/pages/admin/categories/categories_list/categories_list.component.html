@@ -1,1 +1,164 @@
-<p>categories_list works!</p>,
+<div class="p-7 bg-blue-100 rounded-3xl">
+  <h1
+    class="text-4xl font-bold"
+    *ngIf="!firstLoading && totalCategories()! > 0"
+  >
+    Hay {{ totalCategories() }} categorías/s
+  </h1>
+  <h1
+    class="text-4xl font-bold"
+    *ngIf="!firstLoading && totalCategories()! === 0"
+  >
+    No hay equipos
+  </h1>
+  <h1 class="text-4xl font-bold" *ngIf="firstLoading">Cargando categorías/s</h1>
+
+  <div class="my-5" *ngIf="!firstLoading">
+    <button
+      class="mx-3 font-bold text-3xl"
+      (click)="getCategories(position() - 1)"
+    >
+      ◄
+    </button>
+    <button
+      class="mx-3 p-3 font-bold text-2xl rounded-full border-2 border-black"
+      *ngFor="let pageNumber of getPageNumbers()"
+      (click)="getCategories(pageNumber - 1)"
+      [ngClass]="{
+        'bg-white text-black': pageNumber === position() + 1,
+        'bg-black text-white': pageNumber !== position() + 1
+      }"
+    >
+      {{ pageNumber }}
+    </button>
+    <button
+      class="mx-3 font-bold text-3xl"
+      (click)="getCategories(position() + 1)"
+    >
+      ►
+    </button>
+  </div>
+  <table class="w-full" *ngIf="!firstLoading">
+    <thead>
+      <tr class="text-3xl">
+        <th>Nº</th>
+        <th>Nombre</th>
+        <th>Parte final de la URL</th>
+        <th>Subcategorías</th>
+        <th>Activado</th>
+        <th>Creado a</th>
+        <th>Editado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let category of categories(); let i = index">
+      <tr class="whitespace-nowrap text-wrap">
+        <td class="1/12">
+          <div class="flex mt-4 justify-center items-center text-2xl">
+            {{ i + 1 + 8 * position() }}
+          </div>
+        </td>
+        <td class="w-1/8">
+          <div
+            class="whitespace-nowrap text-wrap flex mt-4 justify-center items-center text-2xl"
+            [title]="category.name"
+          >
+            {{ category.name }}
+          </div>
+        </td>
+        <td class="w-1/8">
+          <div
+            [title]="category.slug"
+            class="whitespace-nowrap text-wrap flex mt-4 justify-center items-center text-2xl"
+          >
+            {{ category.slug }}
+          </div>
+        </td>
+        <td class="w-1/8">
+          <div
+            *ngFor="let subcategory of category.subcategories"
+            [title]="subcategory.name"
+            class="whitespace-nowrap text-wrap flex mt-4 justify-center items-center text-2xl"
+          >
+            {{ subcategory.name }}
+          </div>
+        </td>
+        <td class="w-1/8">
+          <div
+            [title]="category.enabled"
+            class="whitespace-nowrap text-wrap flex mt-4 justify-center items-center text-2xl"
+          >
+            {{ category.enabled ? "Sí" : "No" }}
+          </div>
+        </td>
+        <td class="w-1/8">
+          <div
+            [title]="category.created_at"
+            class="whitespace-nowrap text-wrap flex mt-4 justify-center items-center text-2xl"
+          >
+            {{ category.created_at }}
+          </div>
+        </td>
+        <td class="w-1/8">
+          <div
+            [title]="category.updated_at"
+            class="whitespace-nowrap text-wrap flex mt-4 justify-center items-center text-2xl"
+          >
+            {{ category.updated_at }}
+          </div>
+        </td>
+        <td class="w-1/8">
+          <div class="flex mt-4 justify-center items-center text-xl">
+            <button
+              *ngIf="!loading"
+              (click)="removeCategory(category._id)"
+              class="fa-solid fa-trash m-2 p-5 bg-red-600 rounded-full"
+              title="Eliminar categoría"
+            ></button>
+            <a
+              *ngIf="!loading"
+              href="/admin/categories/edit/{{ category._id }}"
+              class="fa-solid fa-edit m-2 p-5 bg-blue-600 text-white rounded-full"
+              title="Editar categoría"
+            ></a>
+            <spinner *ngIf="loading" title="Eliminar categoría"></spinner>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="my-5" *ngIf="!firstLoading">
+    <button
+      class="mx-3 font-bold text-3xl"
+      (click)="getCategories(position() - 1)"
+    >
+      ◄
+    </button>
+    <button
+      class="mx-3 p-3 font-bold text-2xl rounded-full border-2 border-black"
+      *ngFor="let pageNumber of getPageNumbers()"
+      (click)="getCategories(pageNumber - 1)"
+      [ngClass]="{
+        'bg-white text-black': pageNumber === position() + 1,
+        'bg-black text-white': pageNumber !== position() + 1
+      }"
+    >
+      {{ pageNumber }}
+    </button>
+    <button
+      class="mx-3 font-bold text-3xl"
+      (click)="getCategories(position() + 1)"
+    >
+      ►
+    </button>
+  </div>
+  <spinner *ngIf="firstLoading"></spinner>
+  <div class="m-2" *ngIf="!firstLoading">
+    <a
+      href="admin/categories/add"
+      class="fa-solid fa-plus m-2 p-5 bg-blue-600 text-white rounded-full text-xl"
+      title="Añadir categoría"
+    ></a>
+  </div>
+</div>

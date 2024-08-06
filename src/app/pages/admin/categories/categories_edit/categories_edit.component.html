@@ -1,0 +1,95 @@
+<div class="p-7 bg-blue-100 rounded-3xl">
+  <h1 class="text-4xl font-bold flex justify-center">Editar categoría</h1>
+  <form
+    [formGroup]="myForm"
+    (ngSubmit)="updateCategory()"
+    class="flex flex-col"
+    autocomplete="off"
+  >
+    <div class="mt-5 flex flex-row items-center justify-center">
+      <label class="text-xl" for="name">Nombre</label>
+      <input
+        class="mx-2 px-2 py-1 border-2 border-black w-96 rounded-lg"
+        type="text"
+        formControlName="name"
+        name="name"
+        placeholder="Nombre de la categoría"
+        [value]="myForm!.get('name')?.value"
+        required
+      />
+      <label class="text-xl">(Opcional)</label>
+    </div>
+    <div class="mt-5 flex flex-row items-center justify-center">
+      <label class="text-xl" for="slug">Parte final de la URL</label>
+      <input
+        class="mx-2 px-2 py-1 border-2 border-black w-96 rounded-lg"
+        type="text"
+        formControlName="slug"
+        name="slug"
+        placeholder="nombre-de-la-categoria"
+        [value]="myForm!.get('slug')?.value"
+      />
+      <label class="text-xl">(Opcional)</label>
+    </div>
+    <div class="mt-5 flex flex-row items-center justify-center">
+      <label class="text-xl" for="slug">Subcategorías</label>
+      <select
+        class="mx-2 px-2 py-1 border-2 border-black w-96 rounded-lg"
+        *ngIf="!firstLoading"
+        formControlName="subcategories"
+        multiple
+        required
+      >
+        <option
+          *ngFor="let subcategory of subcategories()"
+          [value]="subcategory"
+        >
+          {{ subcategory.name }}
+        </option>
+      </select>
+      <spinner *ngIf="firstLoading"></spinner>
+      <label class="text-xl">(Opcional)</label>
+    </div>
+    <div class="mt-5 flex flex-row items-center justify-center">
+      <label class="text-xl" for="enabled">Activado</label>
+      <input
+        class="mx-2 px-2 py-1 border-2 border-black w-10 rounded-lg"
+        type="checkbox"
+        formControlName="enabled"
+        name="enabled"
+        [value]="myForm!.get('enabled')?.value"
+      />
+      <label class="text-xl">(Opcional)</label>
+    </div>
+    <div class="mt-5 flex flex-row items-center justify-center">
+      <button
+        *ngIf="!loading"
+        class="text-xl font-bold text-white mx-2 p-3 rounded-2xl transition-all duration-500"
+        type="submit"
+        [disabled]="myForm.invalid"
+        [ngClass]="{
+          'bg-violet-900 active:bg-violet-900 active:shadow-lg active:shadow-black active:translate-y-1 hover:bg-black hover:shadow-lg hover:shadow-black hover:translate-y-1':
+            !myForm.invalid,
+          'bg-gray-700 cursor-not-allowed': myForm.invalid
+        }"
+      >
+        Editar
+      </button>
+
+      <button *ngIf="loading" class="mx-2" [disabled]="true" type="submit">
+        <spinner></spinner>
+      </button>
+
+      <a
+        href="admin/categories"
+        class="text-xl font-bold mx-2 p-3 rounded-xl bg-black text-white hover:bg-white hover:text-black transition-all duration-500 hover:translate-y-1 hover:shadow-xl hover:shadow-black"
+      >
+        VOLVER
+      </a>
+    </div>
+
+    <div class="flex flex-col p-3">
+      <div class="row flex justify-center"></div>
+    </div>
+  </form>
+</div>
